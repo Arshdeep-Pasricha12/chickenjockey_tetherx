@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import GaugeChart from '../components/GaugeChart';
 import CarScene from '../components/CarScene';
 import { supabase } from '../lib/supabase';
@@ -62,6 +62,25 @@ export default function Dashboard() {
     }
     setLoading(false);
   };
+
+  // Auto-diagnose when params change (debounced)
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      try {
+        const res = await fetch(`${API}/diagnose`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ params, context: diagContext }),
+        });
+        const data = await res.json();
+        setResult(data);
+      } catch (err) {
+        console.error("Auto-diagnosis failed", err);
+      }
+    }, 500); // 500ms debounce
+
+    return () => clearTimeout(timer);
+  }, [params, diagContext]);
 
   const handleAskAI = async (alert) => {
     setLoadingAi(true);
