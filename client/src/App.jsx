@@ -41,8 +41,9 @@ function AppRoutes() {
   // Logged in — app routes
   return (
     <Routes>
+      <Route path="/" element={<Navigate to="/login" />} />
       {/* Welcome page — full screen, no sidebar */}
-      <Route path="/" element={<WelcomePage />} />
+      <Route path="/welcome" element={<WelcomePage />} />
 
       {/* Dashboard pages — with sidebar */}
       <Route path="/*" element={
@@ -58,8 +59,8 @@ function AppRoutes() {
               <Route path="/timeline" element={<Timeline />} />
               <Route path="/community" element={<Community />} />
               <Route path="/chat" element={<ChatPage />} />
-              <Route path="/login" element={<Navigate to="/" />} />
-              <Route path="*" element={<Navigate to="/dashboard" />} />
+              <Route path="/login" element={<AuthPage />} />
+              <Route path="*" element={<Navigate to="/welcome" />} />
             </Routes>
           </main>
           <AIChat />
