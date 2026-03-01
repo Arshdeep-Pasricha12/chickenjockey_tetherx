@@ -1,5 +1,5 @@
-const CACHE_NAME = 'autopulse-v1';
-const TILE_CACHE = 'autopulse-tiles-v1';
+const CACHE_NAME = 'autopulse-v2';
+const TILE_CACHE = 'autopulse-tiles-v2';
 
 // App shell files to cache
 const APP_SHELL = [
@@ -17,7 +17,7 @@ const APP_SHELL = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('🔧 AutoPulse SW: Caching app shell');
+      console.log('🔧 AutoPulse SW: Caching app shell v2');
       return cache.addAll(APP_SHELL).catch(() => {
         // Some routes may fail in dev, that's ok
         console.log('🔧 AutoPulse SW: Partial cache (dev mode)');
@@ -45,8 +45,8 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
-  // Cache Mapbox tiles for offline map access
-  if (url.hostname.includes('api.mapbox.com') || url.hostname.includes('tiles.mapbox.com')) {
+  // Cache MapTiles (Leaflet/OSM) for offline map access
+  if (url.hostname.includes('tile.openstreetmap.org')) {
     event.respondWith(
       caches.open(TILE_CACHE).then((cache) =>
         cache.match(event.request).then((cached) => {
