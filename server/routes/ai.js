@@ -2,7 +2,12 @@ const express = require('express');
 const router = express.Router();
 const { GoogleGenAI } = require('@google/genai');
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+let ai = null;
+try {
+  ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+} catch (err) {
+  console.warn('⚠️ WARNING: GEMINI_API_KEY is missing. AI Chat will be disabled.');
+}
 
 // POST /api/ai/explain
 router.post('/explain', async (req, res) => {

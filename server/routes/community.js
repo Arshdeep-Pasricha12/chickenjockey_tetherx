@@ -3,7 +3,12 @@ const router = express.Router();
 const supabase = require('../config/supabase');
 const { GoogleGenAI } = require('@google/genai');
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+let ai = null;
+try {
+  ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+} catch (err) {
+  console.warn('⚠️ WARNING: GEMINI_API_KEY is missing. AI features will be disabled.');
+}
 
 // POST /api/community/car-issues — Get common faults for a car model via Gemini
 router.post('/car-issues', async (req, res) => {
