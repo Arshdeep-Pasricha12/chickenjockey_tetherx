@@ -80,7 +80,7 @@ export function useChatEngine() {
       console.error(err);
       setMessages(prev => [...prev, {
         role: 'ai',
-        content: "⚠️ **Connection Error** — Unable to reach the AI service. Make sure the server is running on port 5000.",
+        content: "⚠️ **Connection Error** — Unable to reach the AI service. Please ensure the backend is running.",
         time: new Date()
       }]);
     }
