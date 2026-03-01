@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { useVehicle } from '../context/VehicleContext';
 import WeatherAdvisory from '../components/WeatherAdvisory';
 
-const API = `${import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "" : "http://localhost:5000")}/api`;
+const API = `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api`;
 
 function getGaugeColor(param, value) {
   const colors = {

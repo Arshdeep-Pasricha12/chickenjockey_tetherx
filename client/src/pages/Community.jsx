@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const API = `${import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "" : "http://localhost:5000")}/api`;
+const API = `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api`;
 
 const POPULAR_CARS = [
   { make: 'Maruti Suzuki', model: 'Swift', year: '2020' },

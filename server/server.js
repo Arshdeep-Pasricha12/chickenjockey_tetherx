@@ -19,23 +19,10 @@ app.use('/api/community', require('./routes/community'));
 app.use('/api/alerts', require('./routes/alerts'));
 app.use('/api/ai', require('./routes/ai'));
 
-const path = require('path');
-
-// Serve static files from the React app in production
-if (process.env.NODE_ENV === 'production' || process.env.VERCEL) {
-  app.use(express.static(path.join(__dirname, '../client/dist')));
-
-  // The "catchall" handler: for any request that doesn't
-  // match one above, send back React's index.html file.
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-  });
-} else {
-  // Health check for development
-  app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok', message: 'AutoPulse API is running 🚗', timestamp: new Date().toISOString() });
-  });
-}
+// Health check
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', message: 'AutoPulse API is running 🚗', timestamp: new Date().toISOString() });
+});
 
 // Start server
 app.listen(PORT, () => {
