@@ -1,4 +1,4 @@
-# TetherX - Vehicle Health Dashboard & Diagnostics
+# Autopulse - Vehicle Health Dashboard & Diagnostics
 
 TetherX (AutoPulse) is an advanced web application focused on vehicle telemetry, intelligent fault detection, and predictive maintenance. Developed with React on the frontend and Node.js on the backend, it provides users with a comprehensive overview of their vehicle's health in real-time.
 
