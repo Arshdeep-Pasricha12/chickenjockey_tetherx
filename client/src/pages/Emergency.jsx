@@ -79,9 +79,15 @@ export default function Emergency() {
       style: 'mapbox://styles/mapbox/dark-v11',
       center: [center.lng, center.lat],
       zoom: 13,
+      preserveDrawingBuffer: true,
     });
 
     mapRef.current = map;
+
+    // Force a resize after mount to fix blank tile bugs in production React apps
+    map.on('load', () => {
+      map.resize();
+    });
 
     map.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
@@ -221,6 +227,7 @@ export default function Emergency() {
 
   return (
     <div className="animate-fade-in-up">
+      <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
       <div className="page-header">
         <h1>🚨 Emergency SOS & Nearest Help</h1>
         <p>One-tap help when you need it most. Stay calm — we're here for you.</p>
