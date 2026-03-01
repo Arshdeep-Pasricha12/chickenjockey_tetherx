@@ -24,18 +24,23 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'AutoPulse API is running 🚗', timestamp: new Date().toISOString() });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`\n  🚗 AutoPulse API Server`);
-  console.log(`  ━━━━━━━━━━━━━━━━━━━━━`);
-  console.log(`  🌐 Running on: http://localhost:${PORT}`);
-  console.log(`  📡 Endpoints:`);
-  console.log(`     POST /api/diagnose       — Fault detection`);
-  console.log(`     POST /api/predict         — Predictive maintenance`);
-  console.log(`     POST /api/safety-score    — Drive safety score`);
-  console.log(`     POST /api/emergency       — Emergency SOS`);
-  console.log(`     GET  /api/history         — Health timeline`);
-  console.log(`     GET  /api/community/tips  — Expert tips`);
-  console.log(`     POST /api/alerts/analyze  — Intelligent Multi-Factor Alerts`);
-  console.log(`  ━━━━━━━━━━━━━━━━━━━━━\n`);
-});
+// Start server locally (Vercel will ignore this and use module.exports)
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`\n  🚗 AutoPulse API Server`);
+    console.log(`  ━━━━━━━━━━━━━━━━━━━━━`);
+    console.log(`  🌐 Running on: http://localhost:${PORT}`);
+    console.log(`  📡 Endpoints:`);
+    console.log(`     POST /api/diagnose       — Fault detection`);
+    console.log(`     POST /api/predict         — Predictive maintenance`);
+    console.log(`     POST /api/safety-score    — Drive safety score`);
+    console.log(`     POST /api/emergency       — Emergency SOS`);
+    console.log(`     GET  /api/history         — Health timeline`);
+    console.log(`     GET  /api/community/tips  — Expert tips`);
+    console.log(`     POST /api/alerts/analyze  — Intelligent Multi-Factor Alerts`);
+    console.log(`  ━━━━━━━━━━━━━━━━━━━━━\n`);
+  });
+}
+
+// Export for Vercel Serverless Functions
+module.exports = app;
