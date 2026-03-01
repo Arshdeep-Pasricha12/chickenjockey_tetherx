@@ -2,7 +2,7 @@ import { useState } from 'react';
 import FaultCard from '../components/FaultCard';
 import { useVehicle } from '../context/VehicleContext';
 
-const API = 'http://localhost:5000/api';
+const API = `${import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "" : "http://localhost:5000")}/api`;
 
 const PARAMS = [
   { key: 'speed', label: 'Speed', unit: 'km/h', placeholder: '0–200', icon: '🏎️' },

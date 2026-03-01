@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-const API = 'http://localhost:5000/api';
+const API = `${import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "" : "http://localhost:5000")}/api`;
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 
 mapboxgl.accessToken = MAPBOX_TOKEN;

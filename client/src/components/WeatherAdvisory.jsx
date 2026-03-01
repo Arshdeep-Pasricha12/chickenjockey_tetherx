@@ -62,7 +62,7 @@ export default function WeatherAdvisory() {
       setWeather({ ...payload, icon: conditionObj.icon });
 
       // 3. Get AI Advisory
-      const aiRes = await fetch('http://localhost:5000/api/ai/weather-advisory', {
+      const aiRes = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "" : "http://localhost:5000")}/api/ai/weather-advisory`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
