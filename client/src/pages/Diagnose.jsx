@@ -2,7 +2,7 @@ import { useState } from 'react';
 import FaultCard from '../components/FaultCard';
 import { useVehicle } from '../context/VehicleContext';
 
-const API = `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api`;
+const API = import.meta.env.PROD ? '/api' : 'http://localhost:5000/api';
 
 const PARAMS = [
   { key: 'speed', label: 'Speed', unit: 'km/h', placeholder: '0–200', icon: '🏎️' },
@@ -101,11 +101,11 @@ export default function Diagnose() {
       {result && (
         <div className="animate-fade-in-up">
           {/* Overall Status */}
-          <div className={`status-banner ${result.overallStatus}`} style={{ marginBottom: '24px' }}>
-            <span className="status-emoji">{result.overallEmoji}</span>
+          <div className={`status-banner ${result.overallStatus || 'error'}`} style={{ marginBottom: '24px' }}>
+            <span className="status-emoji">{result.overallEmoji || '⚠️'}</span>
             <div className="status-info">
-              <h2>Diagnosis: {result.overallStatus.charAt(0).toUpperCase() + result.overallStatus.slice(1)}</h2>
-              <p>{result.overallMessage}</p>
+              <h2>Diagnosis: {(result.overallStatus || 'error').charAt(0).toUpperCase() + (result.overallStatus || 'error').slice(1)}</h2>
+              <p>{result.overallMessage || result.error || 'Unable to perform diagnosis due to an API error.'}</p>
             </div>
             <div style={{ marginLeft: 'auto', textAlign: 'right' }}>
               <div style={{ fontSize: '2rem', fontWeight: 800, fontFamily: 'var(--font-display)' }}>{result.totalFaults}</div>

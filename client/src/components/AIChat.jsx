@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useVehicle } from '../context/VehicleContext';
 
-const API = `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api`;
+const API = import.meta.env.PROD ? '/api' : 'http://localhost:5000/api';
 
 const QUICK_ACTIONS = [
   { label: '🔍 What\'s wrong?', prompt: 'Based on my current telemetry, are there any issues with my vehicle?' },

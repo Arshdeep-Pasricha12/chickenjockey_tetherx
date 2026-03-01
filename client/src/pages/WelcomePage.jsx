@@ -48,7 +48,7 @@ export default function WelcomePage() {
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: '0.65rem', color: 'white', fontWeight: 700,
             }}>
-              {name.charAt(0).toUpperCase()}
+              {(name || 'U').charAt(0).toUpperCase()}
             </div>
             <span style={{ fontSize: '0.8rem', color: '#e2e8f0', fontWeight: 500 }}>
               {name}
