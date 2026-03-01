@@ -167,6 +167,11 @@ export default function Emergency() {
           body: JSON.stringify(body),
         });
         const result = await res.json();
+        
+        if (!res.ok || result.error || !result.protocol) {
+          throw new Error(result.error || 'Invalid API response');
+        }
+        
         setData(result);
 
         // Cache for offline use
