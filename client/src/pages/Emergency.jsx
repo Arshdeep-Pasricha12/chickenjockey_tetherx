@@ -1,11 +1,53 @@
 import { useState, useEffect, useRef } from 'react';
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+
+// Fix Leaflet's default marker icon issue in React
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
+
+// Custom icons
+const customUserIcon = new L.DivIcon({
+  html: '<div style="font-size: 28px; line-height: 1; text-align: center;">📍</div>',
+  className: 'custom-leaflet-icon',
+  iconSize: [28, 28],
+  iconAnchor: [14, 28],
+  popupAnchor: [0, -28]
+});
+
+const customServiceIcon = new L.DivIcon({
+  html: '<div style="font-size: 24px; line-height: 1; text-align: center;">🏪</div>',
+  className: 'custom-leaflet-icon',
+  iconSize: [24, 24],
+  iconAnchor: [12, 24],
+  popupAnchor: [0, -24]
+});
 
 const API = import.meta.env.PROD ? '/api' : 'http://localhost:5000/api';
-const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 
-mapboxgl.accessToken = MAPBOX_TOKEN;
+// Helper component to auto-fit bounds
+function FitBounds({ centers, userLocation }) {
+  const map = useMap();
+  useEffect(() => {
+    if (!centers || centers.length === 0) return;
+    
+    let points = centers.filter(sc => sc.coordinates).map(sc => [sc.coordinates.lat, sc.coordinates.lng]);
+    if (userLocation) {
+      points.push([userLocation.lat, userLocation.lng]);
+    }
+    
+    if (points.length > 0) {
+      const bounds = L.latLngBounds(points);
+      map.fitBounds(bounds, { padding: [40, 40], maxZoom: 14 });
+    }
+  }, [centers, userLocation, map]);
+  return null;
+}
 
 const EMERGENCY_TYPES = [
   { id: 'breakdown', label: 'Vehicle Breakdown', icon: '🔧' },
@@ -23,8 +65,6 @@ export default function Emergency() {
   const [locationStatus, setLocationStatus] = useState('idle');
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const [usingCached, setUsingCached] = useState(false);
-  const mapContainerRef = useRef(null);
-  const mapRef = useRef(null);
 
   // Detect online/offline status
   useEffect(() => {
@@ -62,88 +102,7 @@ export default function Emergency() {
     }
   }, []);
 
-  // Initialize or update map when data arrives
-  useEffect(() => {
-    if (!activated || !data || !mapContainerRef.current) return;
-    if (!data.nearbyServiceCenters || data.nearbyServiceCenters.length === 0) return;
 
-    // Destroy existing map if any
-    if (mapRef.current) {
-      mapRef.current.remove();
-      mapRef.current = null;
-    }
-
-    const center = userLocation || { lat: 28.6139, lng: 77.2090 };
-    const map = new mapboxgl.Map({
-      container: mapContainerRef.current,
-      style: 'mapbox://styles/mapbox/dark-v11',
-      center: [center.lng, center.lat],
-      zoom: 13,
-      preserveDrawingBuffer: true,
-    });
-
-    mapRef.current = map;
-
-    // Force a resize after mount to fix blank tile bugs in production React apps
-    map.on('load', () => {
-      map.resize();
-    });
-
-    map.addControl(new mapboxgl.NavigationControl(), 'top-right');
-
-    // User location marker
-    const userEl = document.createElement('div');
-    userEl.innerHTML = '📍';
-    userEl.style.fontSize = '28px';
-    userEl.style.cursor = 'pointer';
-    new mapboxgl.Marker({ element: userEl })
-      .setLngLat([center.lng, center.lat])
-      .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<strong>You are here</strong>'))
-      .addTo(map);
-
-    // Service center markers
-    const bounds = new mapboxgl.LngLatBounds();
-    bounds.extend([center.lng, center.lat]);
-
-    data.nearbyServiceCenters.forEach((sc, index) => {
-      const coords = sc.coordinates
-        ? [sc.coordinates.lng, sc.coordinates.lat]
-        : null;
-      if (!coords) return;
-
-      const el = document.createElement('div');
-      el.innerHTML = '🏪';
-      el.style.fontSize = '24px';
-      el.style.cursor = 'pointer';
-
-      new mapboxgl.Marker({ element: el })
-        .setLngLat(coords)
-        .setPopup(
-          new mapboxgl.Popup({ offset: 25 }).setHTML(`
-            <div style="color:#111;font-family:Inter,sans-serif;padding:4px;">
-              <strong>${sc.name}</strong><br/>
-              <span style="font-size:12px;color:#666;">${sc.address || ''}</span><br/>
-              <span style="font-size:12px;">📏 ${sc.distance} • ⭐ ${sc.rating}</span>
-            </div>
-          `)
-        )
-        .addTo(map);
-
-      bounds.extend(coords);
-    });
-
-    // Fit map to show all markers
-    if (data.nearbyServiceCenters.some(sc => sc.coordinates)) {
-      map.fitBounds(bounds, { padding: 60, maxZoom: 14 });
-    }
-
-    return () => {
-      if (mapRef.current) {
-        mapRef.current.remove();
-        mapRef.current = null;
-      }
-    };
-  }, [activated, data]);
 
   const handleSOS = async () => {
     setActivated(true);
@@ -227,7 +186,6 @@ export default function Emergency() {
 
   return (
     <div className="animate-fade-in-up">
-      <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
       <div className="page-header">
         <h1>🚨 Emergency SOS & Nearest Help</h1>
         <p>One-tap help when you need it most. Stay calm — we're here for you.</p>
@@ -314,13 +272,43 @@ export default function Emergency() {
             </div>
           </div>
 
-          {/* Map — Online: Mapbox, Offline: Fallback Location Card */}
+          {/* Map — Online: Leaflet OSM, Offline: Fallback Location Card */}
           {!isOffline ? (
             <div className="glass-card" style={{ padding: '0', marginBottom: '24px', overflow: 'hidden', borderRadius: 'var(--radius-lg)' }}>
-              <div
-                ref={mapContainerRef}
-                style={{ width: '100%', height: '400px' }}
-              />
+              <div style={{ width: '100%', height: '400px' }}>
+                <MapContainer 
+                  center={userLocation ? [userLocation.lat, userLocation.lng] : [28.6139, 77.2090]} 
+                  zoom={13} 
+                  style={{ width: '100%', height: '100%' }}
+                  scrollWheelZoom={true}
+                >
+                  <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    className="map-tiles"
+                  />
+                  
+                  {userLocation && (
+                    <Marker position={[userLocation.lat, userLocation.lng]} icon={customUserIcon}>
+                      <Popup><strong>You are here</strong></Popup>
+                    </Marker>
+                  )}
+
+                  {data.nearbyServiceCenters?.map((sc, i) => sc.coordinates && (
+                    <Marker key={i} position={[sc.coordinates.lat, sc.coordinates.lng]} icon={customServiceIcon}>
+                      <Popup>
+                        <div style={{ color: '#111', fontFamily: 'Inter,sans-serif', padding: '4px' }}>
+                          <strong>{sc.name}</strong><br/>
+                          <span style={{ fontSize: '12px', color: '#666' }}>{sc.address || ''}</span><br/>
+                          <span style={{ fontSize: '12px' }}>📏 {sc.distance} • ⭐ {sc.rating}</span>
+                        </div>
+                      </Popup>
+                    </Marker>
+                  ))}
+
+                  <FitBounds centers={data.nearbyServiceCenters} userLocation={userLocation} />
+                </MapContainer>
+              </div>
             </div>
           ) : (
             <div className="glass-card" style={{ padding: '0', marginBottom: '24px', overflow: 'hidden', borderRadius: 'var(--radius-lg)' }}>
