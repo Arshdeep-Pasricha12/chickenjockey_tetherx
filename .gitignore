@@ -1,3 +1,7 @@
 node_modules/
 .env
 .DS_Store
+
+# Diagram outputs
+generate_diagram.js
+Flow_Diagram.png

@@ -19,6 +19,7 @@ export default function Predict() {
     lastServiceMileage: 42000,
     lastRotationMileage: 40000
   });
+  const [serviceHistory, setServiceHistory] = useState('');
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -28,7 +29,7 @@ export default function Predict() {
       const res = await fetch(`${API}/predict`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mileage, params, context }),
+        body: JSON.stringify({ mileage, params, context, serviceHistory }),
       });
       const data = await res.json();
       setResult(data);
@@ -41,8 +42,8 @@ export default function Predict() {
   return (
     <div className="animate-fade-in-up">
       <div className="page-header">
-        <h1>🔮 Predictive Maintenance Advisor</h1>
-        <p>Know what your car needs before it tells you — peace of mind, not panic</p>
+        <h1>🔮 AI Predictive Maintenance</h1>
+        <p>Your intelligent, real-time AI advisor. Know what your car needs before it tells you.</p>
       </div>
 
       <div className="glass-card" style={{ padding: '24px', marginBottom: '24px' }}>
@@ -52,13 +53,16 @@ export default function Predict() {
             <label>🛣️ Total Mileage (km)</label>
             <input type="number" className="form-input" value={mileage} onChange={e => setMileage(parseInt(e.target.value) || 0)} />
           </div>
-          <div className="form-group">
-            <label>🛢️ Last Service Mileage (km)</label>
-            <input type="number" className="form-input" value={context.lastServiceMileage} onChange={e => setContext({...context, lastServiceMileage: parseInt(e.target.value) || 0})} />
-          </div>
-          <div className="form-group">
-            <label>🛞 Last Tire Rotation (km)</label>
-            <input type="number" className="form-input" value={context.lastRotationMileage} onChange={e => setContext({...context, lastRotationMileage: parseInt(e.target.value) || 0})} />
+          <div className="form-group" style={{ gridColumn: 'span 2' }}>
+            <label>📝 Service History & Notes (AI Context)</label>
+            <textarea 
+              className="form-input" 
+              placeholder='e.g., "Got an oil change and replaced brake pads at 45,000km, but hearing a squeak."'
+              rows={2}
+              value={serviceHistory} 
+              onChange={e => setServiceHistory(e.target.value)} 
+              style={{ resize: 'vertical' }}
+            />
           </div>
           {Object.entries(params).map(([key, val]) => (
             <div className="form-group" key={key}>
@@ -73,8 +77,8 @@ export default function Predict() {
             </div>
           ))}
         </div>
-        <button className="btn btn-primary" onClick={handlePredict} disabled={loading}>
-          {loading ? '⏳ Predicting...' : '🔮 Predict Maintenance'}
+        <button className="btn btn-primary" onClick={handlePredict} disabled={loading} style={{ marginTop: '16px' }}>
+          {loading ? '⏳ Analyzing AI Telemetry...' : '✨ Generate AI Prediction'}
         </button>
       </div>
 

@@ -38,7 +38,10 @@ export default function WeatherAdvisory() {
     try {
       // 1. Get Location
       const position = await new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 10000 });
+        navigator.geolocation.getCurrentPosition(resolve, reject, { 
+          timeout: 15000, 
+          maximumAge: 300000 // Use cached location for up to 5 mins
+        });
       });
       const { latitude, longitude } = position.coords;
 
@@ -46,7 +49,7 @@ export default function WeatherAdvisory() {
       const weatherRes = await fetch(
         `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,is_day,precipitation,weather_code&timezone=auto`
       );
-      if (!weatherRes.ok) throw new Error('Failed to fetch weather data');
+      if (!weatherRes.ok) throw new Error(`Open-Meteo API Error: ${weatherRes.status}`);
       const weatherData = await weatherRes.json();
       const current = weatherData.current;
 
@@ -62,22 +65,32 @@ export default function WeatherAdvisory() {
       setWeather({ ...payload, icon: conditionObj.icon });
 
       // 3. Get AI Advisory
-      const aiRes = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/ai/weather-advisory`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      if (!aiRes.ok) throw new Error('Failed to fetch AI advisory');
-      const aiData = await aiRes.json();
-      
-      setAdvisory(aiData.advisory);
+      try {
+        const apiBase = import.meta.env.PROD ? '/api' : 'http://localhost:5000/api';
+        const aiRes = await fetch(`${apiBase}/ai/weather-advisory`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!aiRes.ok) throw new Error('Failed to fetch AI advisory');
+        const aiData = await aiRes.json();
+        setAdvisory(aiData.advisory);
+      } catch (aiErr) {
+        console.warn('AI advisory unavailable, showing weather only:', aiErr.message);
+        setAdvisory('AI advisory is currently unavailable (Backend might be down/slow). Drive safely!');
+      }
     } catch (err) {
       console.error('Weather fetching error:', err);
-      // If location is denied, fail silently or show a small prompt
+      // Geolocation Errors
       if (err.code === 1 /* PERMISSION_DENIED */) {
-         setError('Location access needed for weather advisory.');
+         setError('Location access denied. Please enable location permissions in your browser.');
+      } else if (err.code === 2 /* POSITION_UNAVAILABLE */) {
+         setError('Location information is unavailable right now.');
+      } else if (err.code === 3 /* TIMEOUT */) {
+         setError('Location request timed out. Try again or check your signal.');
       } else {
-         setError('Failed to load weather advisory.');
+         // Network or other fetch errors
+         setError(`Failed to load weather: ${err.message || 'Network Error'}`);
       }
     }
     setLoading(false);
@@ -102,7 +115,9 @@ export default function WeatherAdvisory() {
      );
   }
 
-  if (!weather || !advisory) return null;
+  // If we aren't loading, have no error, and STILL have no weather data, only then hide.
+  // But wait, if we got this far and have no weather, it must be an unexpected state.
+  if(!weather && !loading && !error) return null;
 
   return (
     <div className="glass-card stagger-1" style={{ 
