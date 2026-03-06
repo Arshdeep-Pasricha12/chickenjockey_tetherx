@@ -11,11 +11,11 @@
   --bg-primary: #050505;
   --bg-secondary: #0a0a0a;
   --bg-card: #121212;
-  --bg-glass: #141417;
-  --bg-glass-hover: #1c1c20;
+  --bg-glass: #050505;
+  --bg-glass-hover: #0a0a0a;
 
-  --border-glass: #26262a;
-  --border-glass-hover: #36363a;
+  --border-glass: #222222;
+  --border-glass-hover: #333333;
 
   --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;
@@ -58,10 +58,10 @@
   --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
   /* Border Radius */
-  --radius-sm: 2px;
-  --radius-md: 4px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 2px;
+  --radius-xl: 2px;
 }
 
 /* ─── Reset & Base ─────────────────────────── */
@@ -142,11 +142,9 @@ body::after {
 /* ─── Glass Card ───────────────────────────── */
 .glass-card {
   background: var(--bg-glass);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
-  box-shadow: var(--glass-shadow);
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.8);
   transition: all var(--transition-normal);
 }
 .glass-card:hover {
