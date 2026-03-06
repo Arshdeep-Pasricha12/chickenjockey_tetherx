@@ -8,7 +8,6 @@ const navItems = [
   { path: '/emergency', icon: '🚨', label: 'Emergency SOS' },
   { path: '/predict', icon: '🔮', label: 'Predictive Care' },
   { path: '/safety', icon: '🏆', label: 'Safety Score' },
-  { path: '/timeline', icon: '📜', label: 'Health Timeline' },
   { path: '/journal', icon: '📖', label: 'Car Journal' },
   { path: '/community', icon: '👥', label: 'Community' },
   { path: '/chat', icon: '🤖', label: 'AI Assistant' },
