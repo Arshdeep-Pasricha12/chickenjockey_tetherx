@@ -5,3 +5,7 @@ node_modules/
 # Diagram outputs
 generate_diagram.js
 Flow_Diagram.png
+
+# Videos
+*.mp4
+*.mov
