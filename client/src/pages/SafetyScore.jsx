@@ -41,46 +41,46 @@ export default function SafetyScore() {
         <h3 className="section-title">🚗 Your Recent Drive</h3>
         <div className="grid-4">
           <div className="form-group">
-            <label>📏 Average Speed (km/h)</label>
-            <input type="number" className="form-input" value={drivingData.avgSpeed}
+            <label style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.75rem', color: 'var(--accent-blue)' }}>📏 Average Speed (km/h)</label>
+            <input type="number" className="form-input" style={{ fontFamily: 'var(--font-mono)', fontSize: '1.1rem', background: '#000', borderColor: '#222' }}  value={drivingData.avgSpeed}
               onChange={e => setDrivingData(d => ({ ...d, avgSpeed: parseFloat(e.target.value) || 0 }))} />
           </div>
           <div className="form-group">
-            <label>🏎️ Max Speed (km/h)</label>
-            <input type="number" className="form-input" value={drivingData.maxSpeed}
+            <label style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.75rem', color: 'var(--accent-blue)' }}>🏎️ Max Speed (km/h)</label>
+            <input type="number" className="form-input" style={{ fontFamily: 'var(--font-mono)', fontSize: '1.1rem', background: '#000', borderColor: '#222' }}  value={drivingData.maxSpeed}
               onChange={e => setDrivingData(d => ({ ...d, maxSpeed: parseFloat(e.target.value) || 0 }))} />
           </div>
           <div className="form-group">
-            <label>🛑 Hard Braking Events</label>
-            <input type="number" className="form-input" value={drivingData.hardBrakes}
+            <label style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.75rem', color: 'var(--accent-blue)' }}>🛑 Hard Braking Events</label>
+            <input type="number" className="form-input" style={{ fontFamily: 'var(--font-mono)', fontSize: '1.1rem', background: '#000', borderColor: '#222' }}  value={drivingData.hardBrakes}
               onChange={e => setDrivingData(d => ({ ...d, hardBrakes: parseInt(e.target.value) || 0 }))} />
           </div>
           <div className="form-group">
-            <label>⚡ Rapid Accelerations</label>
-            <input type="number" className="form-input" value={drivingData.rapidAccelerations}
+            <label style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.75rem', color: 'var(--accent-blue)' }}>⚡ Rapid Accelerations</label>
+            <input type="number" className="form-input" style={{ fontFamily: 'var(--font-mono)', fontSize: '1.1rem', background: '#000', borderColor: '#222' }}  value={drivingData.rapidAccelerations}
               onChange={e => setDrivingData(d => ({ ...d, rapidAccelerations: parseInt(e.target.value) || 0 }))} />
           </div>
           <div className="form-group">
-            <label>🛣️ Distance (km)</label>
-            <input type="number" className="form-input" value={drivingData.distanceKm}
+            <label style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.75rem', color: 'var(--accent-blue)' }}>🛣️ Distance (km)</label>
+            <input type="number" className="form-input" style={{ fontFamily: 'var(--font-mono)', fontSize: '1.1rem', background: '#000', borderColor: '#222' }}  value={drivingData.distanceKm}
               onChange={e => setDrivingData(d => ({ ...d, distanceKm: parseFloat(e.target.value) || 0 }))} />
           </div>
           <div className="form-group">
-            <label>⏱️ Duration (min)</label>
-            <input type="number" className="form-input" value={drivingData.durationMinutes}
+            <label style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.75rem', color: 'var(--accent-blue)' }}>⏱️ Duration (min)</label>
+            <input type="number" className="form-input" style={{ fontFamily: 'var(--font-mono)', fontSize: '1.1rem', background: '#000', borderColor: '#222' }}  value={drivingData.durationMinutes}
               onChange={e => setDrivingData(d => ({ ...d, durationMinutes: parseFloat(e.target.value) || 0 }))} />
           </div>
           <div className="form-group">
-            <label>🌙 Night Driving</label>
-            <select className="form-input" value={drivingData.nightDriving.toString()}
+            <label style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.75rem', color: 'var(--accent-blue)' }}>🌙 Night Driving</label>
+            <select className="form-input" style={{ fontFamily: 'var(--font-mono)', fontSize: '1.1rem', background: '#000', borderColor: '#222' }}  value={drivingData.nightDriving.toString()}
               onChange={e => setDrivingData(d => ({ ...d, nightDriving: e.target.value === 'true' }))}>
               <option value="false">No</option>
               <option value="true">Yes</option>
             </select>
           </div>
           <div className="form-group">
-            <label>🌦️ Weather</label>
-            <select className="form-input" value={drivingData.weatherCondition}
+            <label style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.75rem', color: 'var(--accent-blue)' }}>🌦️ Weather</label>
+            <select className="form-input" style={{ fontFamily: 'var(--font-mono)', fontSize: '1.1rem', background: '#000', borderColor: '#222' }}  value={drivingData.weatherCondition}
               onChange={e => setDrivingData(d => ({ ...d, weatherCondition: e.target.value }))}>
               <option value="clear">Clear</option>
               <option value="rain">Rain</option>
@@ -115,7 +115,7 @@ export default function SafetyScore() {
                     />
                   </svg>
                   <div className="score-circle-text">
-                    <div className="score-value" style={{ color: result.gradeColor }}>{result.score}</div>
+                    <div className="score-value" style={{ color: result.gradeColor, fontFamily: 'var(--font-mono)', textShadow: `0 0 15px currentColor` }}>{result.score}</div>
                     <div className="score-grade" style={{ color: result.gradeColor }}>{result.gradeEmoji} {result.grade}</div>
                   </div>
                 </div>

@@ -73,10 +73,11 @@ export default function Diagnose() {
           <div className="grid-4">
             {PARAMS.map(p => (
               <div className="form-group" key={p.key}>
-                <label>{p.icon} {p.label} ({p.unit})</label>
+                <label style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.75rem', color: 'var(--accent-blue)' }}>{p.icon} {p.label} ({p.unit})</label>
                 <input
                   type="number"
                   className="form-input"
+                  style={{ fontFamily: 'var(--font-mono)', fontSize: '1.2rem', background: '#000', borderColor: '#222', color: 'var(--text-primary)' }}
                   placeholder={p.placeholder}
                   value={params[p.key] !== undefined ? params[p.key] : ''}
                   onChange={e => updateParam(p.key, e.target.value)}
@@ -108,8 +109,8 @@ export default function Diagnose() {
               <p>{result.overallMessage || result.error || 'Unable to perform diagnosis due to an API error.'}</p>
             </div>
             <div style={{ marginLeft: 'auto', textAlign: 'right' }}>
-              <div style={{ fontSize: '2rem', fontWeight: 800, fontFamily: 'var(--font-display)' }}>{result.totalFaults}</div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>fault{result.totalFaults !== 1 ? 's' : ''} detected</div>
+              <div style={{ fontSize: '3rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: result.totalFaults > 0 ? 'var(--accent-red)' : 'var(--accent-green)', textShadow: '0 0 20px currentColor', lineHeight: '1' }}>{result.totalFaults}</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>fault{result.totalFaults !== 1 ? 's' : ''} detected</div>
             </div>
           </div>
 

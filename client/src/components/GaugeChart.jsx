@@ -40,7 +40,7 @@ export default function GaugeChart({ value, min = 0, max = 100, label, unit, col
           style={{ stroke: gaugeColor, '--gauge-color': gaugeColor }}
         />
         {/* Value text */}
-        <text className="gauge-value" x="60" y="58">
+        <text className="gauge-value" x="60" y="58" style={{ fontFamily: 'var(--font-mono)', fontSize: '24px', fontWeight: 800, fill: 'var(--text-primary)' }}>
           {typeof value === 'number' ? value.toFixed(0) : value}
         </text>
       </svg>

@@ -4,10 +4,10 @@ export default function FaultCard({ fault }) {
       <div className="fault-card-header">
         <span className="fault-icon">{fault.icon || '⚠️'}</span>
         <div style={{ flex: 1 }}>
-          <div className="fault-title">{fault.title}</div>
+          <div className="fault-title" style={{ textTransform: 'uppercase', letterSpacing: '1px' }}>{fault.title}</div>
           {fault.value !== undefined && (
-            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-              {fault.displayName}: {fault.value} {fault.unit}
+            <span style={{ fontSize: '0.85rem', color: 'var(--accent-cyan)', fontFamily: 'var(--font-mono)', textShadow: '0 0 8px rgba(0,255,255,0.4)', background: 'rgba(0,0,0,0.5)', padding: '2px 6px', borderRadius: '4px', border: '1px solid #222' }}>
+              {fault.displayName.toUpperCase()}: {fault.value} {fault.unit}
             </span>
           )}
         </div>

@@ -233,8 +233,8 @@ export default function Emergency() {
             onClick={() => setSelectedType(type.id)}
             style={{
               padding: '20px', textAlign: 'center', cursor: 'pointer',
-              border: selectedType === type.id ? '1px solid var(--accent-red)' : '1px solid var(--border-glass)',
-              background: selectedType === type.id ? 'rgba(239, 68, 68, 0.1)' : 'var(--bg-glass)',
+              border: selectedType === type.id ? '1px solid var(--accent-red)' : '1px solid #222',
+              background: selectedType === type.id ? 'rgba(239, 68, 68, 0.1)' : '#000',
             }}
           >
             <div style={{ fontSize: '2rem', marginBottom: '8px' }}>{type.icon}</div>

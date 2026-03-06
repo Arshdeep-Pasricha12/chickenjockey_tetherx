@@ -67,7 +67,7 @@ export default function Journal() {
       </div>
 
       <div className="glass-card" style={{ padding: '24px', marginBottom: '24px' }}>
-        <h3 className="section-title">✍️ Add a Memory or Log</h3>
+        <h3 className="section-title" style={{ letterSpacing: '1px', textTransform: 'uppercase', color: 'var(--accent-blue)' }}>✍️ Add a Memory or Log</h3>
         <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
           <textarea 
             className="form-input" 
@@ -75,7 +75,7 @@ export default function Journal() {
             rows={2}
             value={memoryText} 
             onChange={e => setMemoryText(e.target.value)} 
-            style={{ resize: 'vertical', flex: 1 }}
+            style={{ resize: 'vertical', flex: 1, fontFamily: 'var(--font-mono)', background: '#020202', borderColor: '#222', color: 'var(--accent-cyan)' }}
           />
           <button className="btn btn-primary" onClick={handleAddMemory} disabled={adding || !memoryText.trim()} style={{ whiteSpace: 'nowrap', height: 'fit-content' }}>
             {adding ? '⏳ Saving...' : '➕ Add Memory'}
@@ -107,11 +107,11 @@ export default function Journal() {
                   {isMemory ? '📸' : '🤖'}
                 </div>
 
-                <div className="timeline-date">{formatDate(event.date)}</div>
+                <div className="timeline-date" style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-muted)', fontSize: '0.8rem', letterSpacing: '1px', textTransform: 'uppercase' }}>{formatDate(event.date)}</div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
                   {!isMemory && <span style={{ fontSize: '1.3rem' }}>{event.emoji}</span>}
-                  <span className="timeline-title" style={{ color: isMemory ? '#60a5fa' : 'inherit' }}>
-                    {isMemory ? 'Driver Memory' : event.title}
+                  <span className="timeline-title" style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', fontWeight: 600, color: isMemory ? 'var(--accent-blue)' : 'inherit', textShadow: isMemory ? '0 0 10px rgba(0,240,255,0.4)' : 'none' }}>
+                    {isMemory ? 'DRIVER MEMORY' : event.title}
                   </span>
                   {!isMemory && (
                     <span className={`badge badge-${event.status === 'healthy' ? 'healthy' : event.status === 'resolved' ? 'low' : event.status === 'critical' ? 'critical' : 'medium'}`} style={{ marginLeft: 'auto' }}>

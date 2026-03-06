@@ -160,10 +160,11 @@ export default function Dashboard() {
             <div className="grid-4">
               {Object.entries(params).map(([key, val]) => (
                 <div className="form-group" key={key}>
-                  <label>{key.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase())}</label>
+                  <label style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.75rem', color: 'var(--accent-blue)' }}>{key.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase())}</label>
                   <input
                     type="number"
                     className="form-input"
+                    style={{ fontFamily: 'var(--font-mono)', fontSize: '1.2rem', background: '#000', borderColor: '#222', color: 'var(--text-primary)' }}
                     value={val}
                     onChange={e => updateParam(key, e.target.value)}
                     step={key === 'batteryVoltage' ? 0.1 : 1}

@@ -50,11 +50,11 @@ export default function Predict() {
         <h3 className="section-title">📊 Current Vehicle State</h3>
         <div className="grid-4">
           <div className="form-group">
-            <label>🛣️ Total Mileage (km)</label>
-            <input type="number" className="form-input" value={mileage} onChange={e => setMileage(parseInt(e.target.value) || 0)} />
+            <label style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.75rem', color: 'var(--accent-blue)' }}>🛣️ Total Mileage (km)</label>
+            <input type="number" className="form-input" style={{ fontFamily: 'var(--font-mono)', fontSize: '1.2rem', background: '#000', borderColor: '#222', color: 'var(--accent-cyan)' }} value={mileage} onChange={e => setMileage(parseInt(e.target.value) || 0)} />
           </div>
           <div className="form-group" style={{ gridColumn: 'span 2' }}>
-            <label>📝 Service History & Notes (AI Context)</label>
+            <label style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.75rem', color: 'var(--accent-blue)' }}>📝 Service History & Notes (AI Context)</label>
             <textarea 
               className="form-input" 
               placeholder='e.g., "Got an oil change and replaced brake pads at 45,000km, but hearing a squeak."'
@@ -66,10 +66,11 @@ export default function Predict() {
           </div>
           {Object.entries(params).map(([key, val]) => (
             <div className="form-group" key={key}>
-              <label>{key.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase())}</label>
+              <label style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.75rem', color: 'var(--accent-blue)' }}>{key.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase())}</label>
               <input
                 type="number"
                 className="form-input"
+                style={{ fontFamily: 'var(--font-mono)', fontSize: '1.2rem', background: '#000', borderColor: '#222', color: 'var(--accent-cyan)', textShadow: '0 0 8px rgba(0,255,255,0.4)' }}
                 value={val}
                 onChange={e => setParams(p => ({ ...p, [key]: parseFloat(e.target.value) || 0 }))}
                 step={key === 'batteryVoltage' ? 0.1 : 1}
@@ -112,10 +113,19 @@ export default function Predict() {
                     </span>
                   </span>
                 </div>
-                <div className="prediction-details">
-                  <div>📏 <span className="prediction-detail-value">{pred.kmRemaining.toLocaleString()}</span> km remaining</div>
-                  <div>📅 <span className="prediction-detail-value">{pred.daysRemaining}</span> days</div>
-                  <div>🔎 Condition: <span className="prediction-detail-value">{pred.condition}</span></div>
+                <div className="prediction-details" style={{ fontFamily: 'var(--font-mono)', marginTop: '12px', background: '#020202', padding: '12px', borderRadius: '4px', border: '1px solid #1a1a1a', fontSize: '0.85rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', borderBottom: '1px dashed #222', paddingBottom: '4px' }}>
+                    <span style={{ color: 'var(--text-muted)' }}>REMAINING DIST.</span>
+                    <span style={{ color: 'var(--accent-cyan)', textShadow: '0 0 8px rgba(0,255,255,0.4)' }}>{pred.kmRemaining.toLocaleString()} KM</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', borderBottom: '1px dashed #222', paddingBottom: '4px' }}>
+                    <span style={{ color: 'var(--text-muted)' }}>EST. TIME</span>
+                    <span style={{ color: 'var(--accent-cyan)', textShadow: '0 0 8px rgba(0,255,255,0.4)' }}>{pred.daysRemaining} DAYS</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: 'var(--text-muted)' }}>SYS CONDITION</span>
+                    <span style={{ color: pred.condition === 'critical' ? 'var(--accent-red)' : 'var(--accent-green)' }}>{pred.condition.toUpperCase()}</span>
+                  </div>
                 </div>
                 {/* Progress bar */}
                 <div style={{ height: '4px', background: 'rgba(255,255,255,0.06)', borderRadius: '2px', marginBottom: '8px', overflow: 'hidden' }}>

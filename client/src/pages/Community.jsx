@@ -181,16 +181,16 @@ export default function Community() {
 
             <div className="grid-3" style={{ marginBottom: '20px' }}>
               <div className="form-group">
-                <label>Make / Brand</label>
-                <input type="text" className="form-input" placeholder="e.g. Maruti Suzuki" value={make} onChange={e => setMake(e.target.value)} required />
+                <label style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.75rem', color: 'var(--accent-blue)' }}>Make / Brand</label>
+                <input type="text" className="form-input" style={{ fontFamily: 'var(--font-mono)', fontSize: '1.1rem', background: '#000', borderColor: '#222' }}  placeholder="e.g. Maruti Suzuki" value={make} onChange={e => setMake(e.target.value)} required />
               </div>
               <div className="form-group">
-                <label>Model</label>
-                <input type="text" className="form-input" placeholder="e.g. Swift" value={model} onChange={e => setModel(e.target.value)} required />
+                <label style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.75rem', color: 'var(--accent-blue)' }}>Model</label>
+                <input type="text" className="form-input" style={{ fontFamily: 'var(--font-mono)', fontSize: '1.1rem', background: '#000', borderColor: '#222' }}  placeholder="e.g. Swift" value={model} onChange={e => setModel(e.target.value)} required />
               </div>
               <div className="form-group">
-                <label>Year (optional)</label>
-                <input type="text" className="form-input" placeholder="e.g. 2020" value={year} onChange={e => setYear(e.target.value)} />
+                <label style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.75rem', color: 'var(--accent-blue)' }}>Year (optional)</label>
+                <input type="text" className="form-input" style={{ fontFamily: 'var(--font-mono)', fontSize: '1.1rem', background: '#000', borderColor: '#222' }}  placeholder="e.g. 2020" value={year} onChange={e => setYear(e.target.value)} />
               </div>
             </div>
 
@@ -506,12 +506,12 @@ export default function Community() {
               <h3 className="section-title" style={{ marginBottom: '16px' }}>✍️ Ask the Community</h3>
               <div className="grid-2">
                 <div className="form-group">
-                  <label>Your Name (optional)</label>
-                  <input type="text" className="form-input" placeholder="Anonymous" value={author} onChange={e => setAuthor(e.target.value)} />
+                  <label style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.75rem', color: 'var(--accent-blue)' }}>Your Name (optional)</label>
+                  <input type="text" className="form-input" style={{ fontFamily: 'var(--font-mono)', fontSize: '1.1rem', background: '#000', borderColor: '#222' }}  placeholder="Anonymous" value={author} onChange={e => setAuthor(e.target.value)} />
                 </div>
                 <div className="form-group">
-                  <label>Your Question</label>
-                  <input type="text" className="form-input" placeholder="What's on your mind?" value={newQuestion} onChange={e => setNewQuestion(e.target.value)} required />
+                  <label style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.75rem', color: 'var(--accent-blue)' }}>Your Question</label>
+                  <input type="text" className="form-input" style={{ fontFamily: 'var(--font-mono)', fontSize: '1.1rem', background: '#000', borderColor: '#222' }}  placeholder="What's on your mind?" value={newQuestion} onChange={e => setNewQuestion(e.target.value)} required />
                 </div>
               </div>
               <button type="submit" className="btn btn-primary">📤 Post Question</button>
