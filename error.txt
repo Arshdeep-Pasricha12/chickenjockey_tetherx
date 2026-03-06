@@ -1,0 +1,7 @@
+remote: error: Trace: a8d34e3ecf2f174ea8f25630e542228579d096a3fc7f89adbb0db219422333ce        
+remote: error: See https://gh.io/lfs for more information.        
+remote: error: File Screen Recording 2026-03-02 162351.mp4 is 443.04 MB; this exceeds GitHub's file size limit of 100.00 MB        
+remote: error: GH001: Large files detected. You may want to try Git Large File Storage - https://git-lfs.github.com.        
+To https://github.com/Arshdeep-Pasricha12/chickenjockey_tetherx
+ ! [remote rejected] main -> main (pre-receive hook declined)
+error: failed to push some refs to 'https://github.com/Arshdeep-Pasricha12/chickenjockey_tetherx'
