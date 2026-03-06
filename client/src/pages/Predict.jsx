@@ -128,6 +128,12 @@ export default function Predict() {
                   }} />
                 </div>
                 <p className="prediction-message">{pred.emotionalMessage}</p>
+                {pred.costOfNeglect && (
+                  <div style={{ marginTop: '12px', padding: '10px', background: 'rgba(255, 23, 68, 0.1)', borderLeft: '3px solid #ff1744', borderRadius: '4px' }}>
+                    <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#ff1744', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>⚠️ Cost of Neglect</div>
+                    <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>{pred.costOfNeglect}</div>
+                  </div>
+                )}
               </div>
             ))}
           </div>

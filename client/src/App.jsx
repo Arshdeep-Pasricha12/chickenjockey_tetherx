@@ -11,6 +11,7 @@ import Emergency from './pages/Emergency';
 import Predict from './pages/Predict';
 import SafetyScore from './pages/SafetyScore';
 import Timeline from './pages/Timeline';
+import Journal from './pages/Journal';
 import Community from './pages/Community';
 import ChatPage from './pages/ChatPage';
 import AuthPage from './pages/AuthPage';
@@ -56,6 +57,7 @@ function AppRoutes() {
               <Route path="/predict" element={<Predict />} />
               <Route path="/safety" element={<SafetyScore />} />
               <Route path="/timeline" element={<Timeline />} />
+              <Route path="/journal" element={<Journal />} />
               <Route path="/community" element={<Community />} />
               <Route path="/chat" element={<ChatPage />} />
               <Route path="/login" element={<Navigate to="/" />} />

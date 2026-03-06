@@ -53,7 +53,8 @@ router.post('/', async (req, res) => {
                 "daysRemaining": 30,
                 "condition": "String (good, degraded, worn, critical)",
                 "urgency": "String (must be EXACTLY one of: immediate, soon, upcoming, scheduled)",
-                "emotionalMessage": "String (a friendly, reassuring, or urgent message to the driver)"
+                "emotionalMessage": "String (a friendly, reassuring, or urgent message to the driver)",
+                "costOfNeglect": "String (a gentle but realistic 1-sentence warning of the financial/safety 'butterfly effect' if they delay this service, like 'Delaying this can wear down your engine block and lead to a $3000 rebuild.')"
               }
             ],
             "nextAction": { /* The single most urgent prediction object from the array */ }
