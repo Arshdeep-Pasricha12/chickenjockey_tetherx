@@ -17,13 +17,13 @@
   --border-glass: #222222;
   --border-glass-hover: #333333;
 
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
   --text-muted: #64748b;
 
-  --accent-blue: #00f0ff;
-  --accent-cyan: #00ffff;
-  --accent-purple: #b026ff;
+  --accent-blue: #f59e0b; /* JDM Amber */
+  --accent-cyan: #fbbf24; /* JDM Gold */
+  --accent-purple: #f59e0b;
   --accent-green: #39ff14;
   --accent-yellow: #ffea00;
   --accent-orange: #ff5500;
@@ -32,9 +32,9 @@
 
   --gradient-hero: linear-gradient(
     135deg,
-    #3b82f6 0%,
-    #8b5cf6 50%,
-    #06b6d4 100%
+    #f59e0b 0%,
+    #fbbf24 50%,
+    #f97316 100%
   );
   --gradient-danger: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
   --gradient-success: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
